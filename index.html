@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyWings - Превосходя высоты</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="фрейм 1.png" alt="SkyWings Logo">
+                <div class="logo-text">Sky<span>Wings</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#flights">Рейсы</a></li>
+                    <li><a href="#destinations">Направления</a></li>
+                    <li><a href="#services">Сервисы</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#blog">Блог</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Откройте мир с SkyWings</h1>
+            <p>Путешествуйте с комфортом по лучшим ценам. Более 150 направлений по всему миру.</p>
+            <div class="hero-btns">
+                <a href="#flights" class="btn">Найти рейс</a>
+                <a href="#about" class="btn btn-outline">Узнать больше</a>
+            </div>
+            
+            <div class="search-box">
+                <div class="search-tabs">
+                    <button class="search-tab active" data-tab="flights">Рейсы</button>
+                    <button class="search-tab" data-tab="hotels">Отели</button>
+                    <button class="search-tab" data-tab="cars">Аренда авто</button>
+                </div>
+                <div class="search-form-content">
+                    <form class="search-form" id="flights-form">
+                        <div class="form-group">
+                            <label for="from">Откуда</label>
+                            <input type="text" id="from" placeholder="Город или аэропорт">
+                        </div>
+                        <div class="form-group">
+                            <label for="to">Куда</label>
+                            <input type="text" id="to" placeholder="Город или аэропорт">
+                        </div>
+                        <div class="form-group">
+                            <label for="departure">Туда</label>
+                            <input type="date" id="departure">
+                        </div>
+                        <div class="form-group">
+                            <label for="return">Обратно</label>
+                            <input type="date" id="return">
+                        </div>
+                        <div class="form-group">
+                            <label for="passengers">Пассажиры</label>
+                            <select id="passengers">
+                                <option>1 взрослый</option>
+                                <option selected>2 взрослых</option>
+                                <option>3 взрослых</option>
+                                <option>Семья (2+2)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Класс</label>
+                            <select id="class">
+                                <option>Эконом</option>
+                                <option selected>Премиум-эконом</option>
+                                <option>Бизнес</option>
+                                <option>Первый</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="search-btn">Найти рейсы</button>
+                    </form>
+                    <form class="search-form" id="hotels-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="destination">Город</label>
+                            <input type="text" id="destination" placeholder="Введите город">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkin">Заезд</label>
+                            <input type="date" id="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Выезд</label>
+                            <input type="date" id="checkout">
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Гости</label>
+                            <select id="guests">
+                                <option>1 гость</option>
+                                <option selected>2 гостя</option>
+                                <option>3 гостя</option>
+                                <option>Семья (2+2)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="search-btn">Найти отели</button>
+                    </form>
+                    <form class="search-form" id="cars-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="pickup">Место получения</label>
+                            <input type="text" id="pickup" placeholder="Город или адрес">
+                        </div>
+                        <div class="form-group">
+                            <label for="dropoff">Место возврата</label>
+                            <input type="text" id="dropoff" placeholder="Город или адрес">
+                        </div>
+                        <div class="form-group">
+                            <label for="pickup-date">Дата получения</label>
+                            <input type="date" id="pickup-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="return-date">Дата возврата</label>
+                            <input type="date" id="return-date">
+                        </div>
+                        <button type="submit" class="search-btn">Найти авто</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="flights" class="features">
+        <div class="section-title">
+            <h2>Рейсы</h2>
+            <p>Найдите лучшие предложения по рейсам по всему миру</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1556388158-158ea5ccacbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Рейсы">
+                </div>
+                <div class="feature-content">
+                    <h3>Актуальные рейсы</h3>
+                    <p>Проверяйте расписание и бронируйте билеты на удобные рейсы.</p>
+                    <a href="flight-schedule.html" class="feature-link" >Посмотреть расписание <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="destinations" class="destinations">
+        <div class="destinations-container">
+            <div class="section-title">
+                <h2>Популярные направления</h2>
+                <p>Откройте для себя лучшие города мира с нашими специальными предложениями</p>
+            </div>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <div class="destination-img">
+                        <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Токио">
+                    </div>
+                    <div class="destination-overlay">
+                        <h3>Токио</h3>
+                        <p><i class="fas fa-plane"></i> Перелет от 25,000 ₽</p>
+                        <p><i class="fas fa-calendar-alt"></i> Круглый год</p>
+                        <div class="price">от 45,000 ₽</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-img">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Париж">
+                    </div>
+                    <div class="destination-overlay">
+                        <h3>Париж</h3>
+                        <p><i class="fas fa-plane"></i> Перелет от 18,000 ₽</p>
+                        <p><i class="fas fa-calendar-alt"></i> Круглый год</p>
+                        <div class="price">от 32,000 ₽</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-img">
+                        <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Нью-Йорк">
+                    </div>
+                    <div class="destination-overlay">
+                        <h3>Нью-Йорк</h3>
+                        <p><i class="fas fa-plane"></i> Перелет от 30,000 ₽</p>
+                        <p><i class="fas fa-calendar-alt"></i> Круглый год</p>
+                        <div class="price">от 55,000 ₽</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="destination-img">
+                        <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Бангкок">
+                    </div>
+                    <div class="destination-overlay">
+                        <h3>Бангкок</h3>
+                        <p><i class="fas fa-plane"></i> Перелет от 22,000 ₽</p>
+                        <p><i class="fas fa-calendar-alt"></i> Ноябрь-Апрель</p>
+                        <div class="price">от 38,000 ₽</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="features">
+        <div class="section-title">
+            <h2>Сервисы</h2>
+            <p>Дополнительные услуги для вашего комфорта</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1556388158-158ea5ccacbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Сервисы">
+                </div>
+                <div class="feature-content">
+                    <h3>Дополнительные услуги</h3>
+                    <p>Багаж, спецпитание и многое другое.</p>
+                    <a href="#services" class="feature-link">Подробнее <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="testimonials">
+        <div class="section-title">
+            <h2>О нас</h2>
+            <p>Узнайте больше о SkyWings</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>SkyWings — лидер в области авиаперевозок с 2005 года, предлагающий комфорт и безопасность.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="blog">
+        <div class="section-title">
+            <h2>Блог</h2>
+            <p>Читайте наши статьи и советы для путешественников</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-content">
+                    <h3>10 советов для комфортного перелёта</h3>
+                    <p>Узнайте, как сделать ваш полёт максимально комфортным с нашими советами.</p>
+                    <a href="10-sovetov.html" class="feature-link">Читать <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-content">
+                    <h3>Лучшие направления для зимнего отдыха</h3>
+                    <p>Куда отправиться зимой? Мы подобрали для вас топ-5 направлений.</p>
+                    <a href="napravleniya-zima.html">Читать <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="career" class="career">
+        <div class="career-container">
+            <h2>Карьера в SkyWings</h2>
+            <p>Присоединяйтесь к нашей команде! Мы ищем талантливых специалистов.</p>
+            <p>Открытые вакансии: <a href="404.html" class="career-link">Пилот</a>, <a href="404.html" class="career-link">Бортпроводник</a>, <a href="404.html" class="career-link">Менеджер по продажам</a></p>
+            <p>Отправьте своё резюме на <a href="mailto:hr@skywings.com" style="color: var(--secondary);">hr@skywings.com</a></p>
+        </div>
+    </section>
+    
+    <section id="contact" class="newsletter">
+        <div class="newsletter-container">
+            <h2>Контакты</h2>
+            <p>Свяжитесь с нами для получения дополнительной информации</p>
+            <p><i class="fas fa-phone-alt"></i> +7 (800) 123-45-67</p>
+            <p><i class="fas fa-envelope"></i> info@skywings.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Москва, ул. Авиационная, 1</p>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>SkyWings</h3>
+                <p>Лидер в области авиаперевозок с 2005 года. Мы предлагаем комфортные и безопасные путешествия по всему миру.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Информация</h3>
+                <ul>
+                    <li><a href="#about">О компании</a></li>
+                    <li><a href="#career">Карьера</a></li>
+                    <li><a href="#">Пресс-центр</a></li>
+                    <li><a href="#blog">Блог</a></li>
+                    <li><a href="#contact">Помощь</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Услуги</h3>
+                <ul>
+                    <li><a href="#flights">Бронирование</a></li>
+                    <li><a href="#">Проверка рейса</a></li>
+                    <li><a href="#">Регистрация</a></li>
+                    <li><a href="#services">Багаж</a></li>
+                    <li><a href="#services">Спецпитание</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i> +7 (800) 123-45-67</li>
+                    <li><i class="fas fa-envelope"></i> info@skywings.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Авиационная, 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 SkyWings Airlines. Все права защищены. | <a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top">Наверх</a>
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modal-content"></div>
+    </div>
+
+    <script>
+        // Переключение вкладок поиска
+        const tabs = document.querySelectorAll('.search-tab');
+        const forms = document.querySelectorAll('.search-form');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                forms.forEach(form => form.style.display = 'none');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-form`).style.display = 'block';
+            });
+        });
+
+        // Обработка отправки формы
+        forms.forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formId = form.id;
+
+                if (formId === 'flights-form') {
+                    // Собираем данные из формы рейсов
+                    const from = document.getElementById('from').value;
+                    const to = document.getElementById('to').value;
+                    const departure = document.getElementById('departure').value;
+                    const returnDate = document.getElementById('return').value;
+                    const passengers = document.getElementById('passengers').value;
+                    const flightClass = document.getElementById('class').value;
+
+                    // Формируем URL с параметрами поиска
+                    const queryParams = new URLSearchParams({
+                        from: from || '',
+                        to: to || '',
+                        departure: departure || '',
+                        return: returnDate || '',
+                        passengers: passengers || '',
+                        class: flightClass || ''
+                    }).toString();
+
+                    // Перенаправляем на flight-schedule.html с параметрами
+                    checkFileExists(null, 'flight-schedule.html', `flight-schedule.html?${queryParams}`);
+                } else if (formId === 'hotels-form') {
+                    // Для отелей (пока демонстрационно)
+                    alert('Поиск отелей запущен! (Функционал демонстрационный)');
+                } else if (formId === 'cars-form') {
+                    // Для аренды авто (пока демонстрационно)
+                    alert('Поиск авто запущен! (Функционал демонстрационный)');
+                }
+            });
+        });
+
+        // Проверка существования файла перед переходом
+        function checkFileExists(event, url, redirectUrl = url) {
+            if (event) event.preventDefault();
+            fetch(url, { method: 'HEAD', mode: 'no-cors' })
+                .then(response => {
+                    if (!response.ok) {
+                        window.location.href = '404.html';
+                    } else {
+                        window.location.href = redirectUrl;
+                    }
+                })
+                .catch(() => {
+                    window.location.href = '404.html';
+                });
+        }
+
+        // Показать модальное окно с содержимым 404.html
+        function show404Modal(event) {
+            event.preventDefault();
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+
+            // Загружаем содержимое 404.html
+            fetch('404.html')
+                .then(response => response.text())
+                .then(html => {
+                    modalContent.innerHTML = html;
+                    modal.style.display = 'flex';
+
+                    // Добавляем кнопку закрытия, если её нет
+                    if (!modalContent.querySelector('.modal-close')) {
+                        const closeButton = document.createElement('button');
+                        closeButton.textContent = 'Закрыть';
+                        closeButton.className = 'modal-close';
+                        closeButton.onclick = () => modal.style.display = 'none';
+                        modalContent.appendChild(closeButton);
+                    }
+                })
+                .catch(error => {
+                    modalContent.innerHTML = '<h2>404</h2><p>К сожалению, страница не найдена.</p><button class="modal-close">Закрыть</button>';
+                    modal.style.display = 'flex';
+                });
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // Плавная прокрутка к секциям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Показать/скрыть кнопку "Вернуться наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        // Плавная прокрутка наверх при клике
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

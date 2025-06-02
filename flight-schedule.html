@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание рейсов - SkyWings</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        h1 {
+            color: #005f87;
+            text-align: center;
+        }
+        .schedule-container {
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .search-bar input, .search-bar select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .search-bar button {
+            background-color: #e31937;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #c0102d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #005f87;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+        .booked {
+            color: red;
+            font-weight: bold;
+        }
+        .btn-book {
+            background-color: #e31937;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-book:hover {
+            background-color: #c0102d;
+        }
+        .btn-book:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #e31937;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .passenger-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        .passenger-form h3 {
+            margin-bottom: 15px;
+            color: #005f87;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-actions {
+            text-align: right;
+        }
+        .form-actions button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-confirm {
+            background-color: #e31937;
+            color: white;
+            border: none;
+            margin-left: 10px;
+        }
+        .btn-confirm:hover {
+            background-color: #c0102d;
+        }
+        .btn-cancel {
+            background-color: #ccc;
+            border: none;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <h1>Расписание рейсов</h1>
+    <div class="schedule-container">
+        <div class="search-bar">
+            <select id="search-field">
+                <option value="flight">Номер рейса</option>
+                <option value="from">Откуда</option>
+                <option value="to">Куда</option>
+                <option value="date">Дата</option>
+            </select>
+            <input type="text" id="search-input" placeholder="Введите запрос для поиска...">
+            <button onclick="searchFlights()">Поиск</button>
+        </div>
+        <table id="schedule-table">
+            <thead>
+                <tr>
+                    <th>Рейс</th>
+                    <th>Откуда</th>
+                    <th>Куда</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Свободные места</th>
+                    <th>Статус</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody id="schedule-body">
+                <!-- Данные будут добавлены через JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <a href="index.html" class="back-link">Вернуться на главную</a>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="passenger-form" id="passenger-form">
+        <h3>Введите данные для бронирования</h3>
+        <div class="form-group">
+            <label for="passenger-name">Имя</label>
+            <input type="text" id="passenger-name" placeholder="Введите ваше имя" required>
+        </div>
+        <div class="form-group">
+            <label for="passenger-email">Email</label>
+            <input type="email" id="passenger-email" placeholder="Введите ваш email" required>
+        </div>
+        <div class="form-actions">
+            <button class="btn-cancel" onclick="closeForm()">Отмена</button>
+            <button class="btn-confirm" onclick="confirmBooking()">Забронировать</button>
+        </div>
+    </div>
+
+    <script>
+        // Начальные данные рейсов
+        const initialFlights = [
+            { id: 1, flight: "SW101", from: "Москва", to: "Токио", date: "2025-06-05", time: "14:00", seats: 5 },
+            { id: 2, flight: "SW102", from: "Москва", to: "Париж", date: "2025-06-06", time: "09:00", seats: 3 },
+            { id: 3, flight: "SW103", from: "Москва", to: "Нью-Йорк", date: "2025-06-07", time: "11:00", seats: 2 },
+            { id: 4, flight: "SW104", from: "Москва", to: "Бангкок", date: "2025-06-08", time: "16:00", seats: 4 }
+        ];
+
+        // Загрузка данных из localStorage или использование начальных данных
+        let flights = JSON.parse(localStorage.getItem('flights')) || initialFlights;
+        let filteredFlights = [...flights]; // Отфильтрованные рейсы для отображения
+
+        // Функция получения параметров из URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                from: params.get('from') || '',
+                to: params.get('to') || '',
+                departure: params.get('departure') || '',
+                return: params.get('return') || '',
+                passengers: params.get('passengers') || '',
+                class: params.get('class') || ''
+            };
+        }
+
+        // Функция фильтрации рейсов на основе параметров
+        function filterFlightsFromParams() {
+            const params = getQueryParams();
+            filteredFlights = flights.filter(flight => {
+                const matchesFrom = params.from ? flight.from.toLowerCase().includes(params.from.toLowerCase()) : true;
+                const matchesTo = params.to ? flight.to.toLowerCase().includes(params.to.toLowerCase()) : true;
+                const matchesDate = params.departure ? flight.date === params.departure : true;
+                return matchesFrom && matchesTo && matchesDate;
+            });
+            renderSchedule(filteredFlights);
+        }
+
+        // Отображение расписания
+        function renderSchedule(flightsToRender) {
+            const tbody = document.getElementById('schedule-body');
+            tbody.innerHTML = '';
+            flightsToRender.forEach(flight => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${flight.flight}</td>
+                    <td>${flight.from}</td>
+                    <td>${flight.to}</td>
+                    <td>${flight.date}</td>
+                    <td>${flight.time}</td>
+                    <td>${flight.seats}</td>
+                    <td class="${flight.seats > 0 ? 'available' : 'booked'}">
+                        ${flight.seats > 0 ? 'Есть места' : 'Мест нет'}
+                    </td>
+                    <td>
+                        <button class="btn-book" onclick="openBookingForm(${flight.id})"
+                            ${flight.seats === 0 ? 'disabled' : ''}>
+                            Забронировать
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Функция поиска (ручной поиск на странице)
+        function searchFlights() {
+            const searchField = document.getElementById('search-field').value;
+            const searchValue = document.getElementById('search-input').value.toLowerCase();
+
+            filteredFlights = flights.filter(flight => {
+                const fieldValue = flight[searchField].toLowerCase();
+                return fieldValue.includes(searchValue);
+            });
+
+            renderSchedule(filteredFlights);
+        }
+
+        // Открытие формы бронирования
+        let currentFlightId = null;
+        function openBookingForm(flightId) {
+            currentFlightId = flightId;
+            document.getElementById('passenger-form').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // Закрытие формы
+        function closeForm() {
+            document.getElementById('passenger-form').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('passenger-name').value = '';
+            document.getElementById('passenger-email').value = '';
+            currentFlightId = null;
+        }
+
+        // Подтверждение бронирования
+        function confirmBooking() {
+            const name = document.getElementById('passenger-name').value;
+            const email = document.getElementById('passenger-email').value;
+
+            if (!name || !email) {
+                alert('Пожалуйста, заполните все поля.');
+                return;
+            }
+
+            const flight = flights.find(f => f.id === currentFlightId);
+            if (flight && flight.seats > 0) {
+                flight.seats -= 1;
+                localStorage.setItem('flights', JSON.stringify(flights));
+                filteredFlights = flights.filter(flight => {
+                    const params = getQueryParams();
+                    const matchesFrom = params.from ? flight.from.toLowerCase().includes(params.from.toLowerCase()) : true;
+                    const matchesTo = params.to ? flight.to.toLowerCase().includes(params.to.toLowerCase()) : true;
+                    const matchesDate = params.departure ? flight.date === params.departure : true;
+                    return matchesFrom && matchesTo && matchesDate;
+                });
+                renderSchedule(filteredFlights);
+                closeForm();
+                alert(`Бронирование успешно! Рейс ${flight.flight} (${flight.from} - ${flight.to}) забронирован для ${name}.`);
+            } else {
+                alert('Извините, места закончились.');
+                closeForm();
+            }
+        }
+
+        // Инициализация: фильтрация на основе параметров URL
+        filterFlightsFromParams();
+    </script>
+</body>
+</html>
